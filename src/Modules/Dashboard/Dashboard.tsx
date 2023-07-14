@@ -126,7 +126,7 @@ const Dashboard: FC = () => {
                   height="600"
                   language="json"
                   theme="vs-dark"
-                  value={uiSchema}
+                  value={jsonSchema}
                   options={options}
                   onChange={onChange}
                   editorDidMount={uiSchemaEditorDidMount}

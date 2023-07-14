@@ -6,33 +6,82 @@ export const jsonSchemaDefault = {
     "due_date"
   ],
   "properties": {
-    "name": {
+    "estimated_treatment_time": {
       "type": "string",
-      "minLength": 1
+      "minLength": 1,
+      "label": "Estimated Treatment Time (months)"
     },
-    "description": {
-      "type": "string"
-    },
-    "done": {
-      "type": "boolean"
-    },
-    "due_date": {
-      "type": "string",
-      "format": "date"
-    },
-    "rating": {
-      "type": "integer",
-      "maximum": 5
-    },
-    "recurrence": {
-      "type": "string",
-      "enum": [
-        "Never",
-        "Daily",
-        "Weekly",
-        "Monthly"
+    "upper": {
+      "oneOf": [
+        {
+          "const": "aligner",
+          "title": "Aligner"
+        },
+        {
+          "const": "retainer_only",
+          "title": "Retainer Only"
+        }
       ]
     },
+    "lower": {
+      "oneOf": [
+        {
+          "const": "aligner",
+          "title": "Aligner"
+        },
+        {
+          "const": "retainer_only",
+          "title": "Retainer Only"
+        }
+      ]
+    },
+    "selected_teeth_to_treat": {
+      "type": "string",
+      "label": "Select teeth to treat",
+      "enum": [
+        "3-3",
+        "5-5",
+        "6-6",
+        "7-7"
+      ]
+    },
+    "class_correction": {
+      "type": "string",
+      "label": "Class Correction",
+      "enum": [
+        "Maintain",
+        "Correct",
+        "Accept best fit",
+      ]
+    },
+    "midline_correction": {
+      "type": "string",
+      "label": "Midline Correction",
+      "enum": [
+        "Maintain",
+        "Move upper to lower",
+        "Move lower to upper",
+        "Move both"
+      ]
+    },
+    "crossbite_correction": {
+      "type": "string",
+      "label": "Crossbite Correction",
+      "enum": [
+        "Not applicable",
+        "Maintain",
+        "Correct",
+      ]
+    },
+    "planning_for_restorations": {
+      "type": "string",
+      "label": "Planning for Restorations?",
+      "enum": [
+        "yes",
+        "no",
+      ]
+    },
+   
     "recurrence_interval": {
       "type": "integer"
     }
@@ -41,58 +90,61 @@ export const jsonSchemaDefault = {
  
 
 export const uiSchemaDefault = {
-  "type": "VerticalLayout",
-  "elements": [
+  "type": "Group",
+  "label": "uAssist Prescription",
+  "elements":[
     {
-      "type": "Control",
-      "label": false,
-      "scope": "#/properties/done"
-    },
-    {
-      "type": "Control",
-      "scope": "#/properties/name"
-    },
-    {
-      "type": "HorizontalLayout",
+      "type": "VerticalLayout",
       "elements": [
         {
           "type": "Control",
-          "scope": "#/properties/due_date"
+          "label": true,
+          "scope": "#/properties/estimated_treatment_time"
         },
         {
           "type": "Control",
-          "scope": "#/properties/rating"
+          "scope": "#/properties/upper"
         },
+        {
+          "type": "Control",
+          "scope": "#/properties/lower"
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/selected_teeth_to_treat",
+          "options": {
+            "format": "radio"
+          }
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/class_correction",
+          "options": {
+            "format": "radio"
+          }
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/midline_correction",
+          "options": {
+            "format": "radio"
+          }
+        },{
+          "type": "Control",
+          "scope": "#/properties/crossbite_correction",
+          "options": {
+            "format": "radio"
+          }
+        },{
+          "type": "Control",
+          "scope": "#/properties/planning_for_restorations",
+          "options": {
+            "format": "radio"
+          }
+        }
+       
       ],
-    },
-    {
-      "type": "Control",
-      "scope": "#/properties/description",
-      "options": {
-        "multi": true
-      },
-    },
-    {
-      "type": "HorizontalLayout",
-      "elements": [
-        {
-          "type": "Control",
-          "scope": "#/properties/recurrence"
-        },
-        {
-          "type": "Control",
-          "scope": "#/properties/recurrence_interval",
-          "rule": {
-            "effect": "HIDE",
-            "condition": {
-              "scope": "#/properties/recurrence",
-              "schema": {
-                "const": "Never"
-              },
-            },
-          },
-        },
-      ],
-    },
-  ],
+    }
+  ]
+ 
 }
