@@ -12,6 +12,26 @@ export const jsonSchemaDefault = {
       "label": "Estimated Treatment Time (months)"
     },
     "upper": {
+      "type": 'boolean',
+      "label": "Upper"
+    },
+    "lower": {
+      "type": 'boolean',
+      "label": "Lower"
+    },
+    "bracket_removal":{
+      "type": 'boolean',
+      "label": "Bracket Removal"
+    },
+    "cover_lingual_bar":{
+      "type": 'boolean',
+      "label": "Cover Lingual Bar"
+    },
+    "remove_lingual_bar":{
+      "type": 'boolean',
+      "label": "Remove Lingual Bar"
+    },
+    "upper_aligner": {
       "oneOf": [
         {
           "const": "aligner",
@@ -23,7 +43,7 @@ export const jsonSchemaDefault = {
         }
       ]
     },
-    "lower": {
+    "lower_aligner": {
       "oneOf": [
         {
           "const": "aligner",
@@ -38,6 +58,7 @@ export const jsonSchemaDefault = {
     "selected_teeth_to_treat": {
       "type": "string",
       "label": "Select teeth to treat",
+      "isRadioGroup": true,
       "enum": [
         "3-3",
         "5-5",
@@ -46,6 +67,7 @@ export const jsonSchemaDefault = {
       ]
     },
     "class_correction": {
+      "isRadioGroup": true,
       "type": "string",
       "label": "Class Correction",
       "enum": [
@@ -55,6 +77,7 @@ export const jsonSchemaDefault = {
       ]
     },
     "midline_correction": {
+      "isRadioGroup": true,
       "type": "string",
       "label": "Midline Correction",
       "enum": [
@@ -67,6 +90,7 @@ export const jsonSchemaDefault = {
     "crossbite_correction": {
       "type": "string",
       "label": "Crossbite Correction",
+      "isRadioGroup": true,
       "enum": [
         "Not applicable",
         "Maintain",
@@ -74,11 +98,23 @@ export const jsonSchemaDefault = {
       ]
     },
     "planning_for_restorations": {
+      "isRadioGroup": true,
       "type": "string",
       "label": "Planning for Restorations?",
       "enum": [
         "yes",
         "no",
+      ]
+    },
+    "test": {
+      "type": "string",
+      "label": "Midline Correction",
+      "isRadioGroup": true,
+      "enum": [
+        "Maintain",
+        "Move upper to lower",
+        "Move lower to upper",
+        "Move both"
       ]
     },
    
@@ -102,46 +138,53 @@ export const uiSchemaDefault = {
           "scope": "#/properties/estimated_treatment_time"
         },
         {
-          "type": "Control",
-          "scope": "#/properties/upper"
+          "type": "HorizontalLayout",
+          "elements": [
+            {
+              "type": "Control",
+              "scope": "#/properties/upper",
+            },
+            
+            {
+              "type": "Control",
+              "scope": "#/properties/upper_aligner",
+              "label": false
+            },
+          ]
         },
         {
           "type": "Control",
-          "scope": "#/properties/lower"
+          "scope": "#/properties/lower",
         },
         {
           "type": "Control",
-          "scope": "#/properties/selected_teeth_to_treat",
-          "options": {
-            "format": "radio"
-          }
+          "scope": "#/properties/lower_aligner",
+          "label": false
         },
         {
           "type": "Control",
-          "scope": "#/properties/class_correction",
-          "options": {
-            "format": "radio"
-          }
+          "scope": "#/properties/selected_teeth_to_treat"
         },
         {
           "type": "Control",
-          "scope": "#/properties/midline_correction",
-          "options": {
-            "format": "radio"
-          }
+          "scope": "#/properties/class_correction"
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/midline_correction"
         },{
           "type": "Control",
           "scope": "#/properties/crossbite_correction",
-          "options": {
-            "format": "radio"
-          }
+         
         },{
           "type": "Control",
           "scope": "#/properties/planning_for_restorations",
-          "options": {
-            "format": "radio"
-          }
-        }
+         
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/test"
+        },
        
       ],
     }

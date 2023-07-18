@@ -15,8 +15,16 @@ import { materialRenderers, materialCells } from "@jsonforms/material-renderers"
 import { jsonSchemaDefault, uiSchemaDefault } from "./testJson"
 import { getMonacoModelForUri } from "./Editor/jsonSchemaValidation"
 import { Uri } from "monaco-editor/esm/vs/editor/editor.api"
+import URadioGroup from "../Controls/URadioGroup/URadioGroup"
+import { URadioGroupTester } from "../Controls/URadioGroup/URadioGroupTester"
 
 const Dashboard: FC = () => {
+  const renderers = [
+    ...materialRenderers,
+    //register custom renderers
+    { tester: URadioGroupTester, renderer: URadioGroup },
+  ]
+
   const [jsonSchema, setJsonSchema] = useState<any>(
     JSON.stringify(jsonSchemaDefault, null, 2),
   )
@@ -126,7 +134,7 @@ const Dashboard: FC = () => {
                   height="600"
                   language="json"
                   theme="vs-dark"
-                  value={jsonSchema}
+                  value={data}
                   options={options}
                   onChange={onChange}
                   editorDidMount={uiSchemaEditorDidMount}
@@ -143,7 +151,7 @@ const Dashboard: FC = () => {
                 schema={JSON.parse(jsonSchema)}
                 uischema={JSON.parse(uiSchema)}
                 data={data}
-                renderers={materialRenderers}
+                renderers={renderers}
                 cells={materialCells}
                 onChange={({ data, _errors }) => setData(data)}
               />
