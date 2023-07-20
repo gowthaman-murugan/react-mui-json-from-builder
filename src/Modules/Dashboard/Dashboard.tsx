@@ -17,20 +17,54 @@ import { getMonacoModelForUri } from "./Editor/jsonSchemaValidation"
 import { Uri } from "monaco-editor/esm/vs/editor/editor.api"
 import URadioGroup from "../Controls/URadioGroup/URadioGroup"
 import { URadioGroupTester } from "../Controls/URadioGroup/URadioGroupTester"
+import ResultView from "./Result"
+import UiSchema from "./UiSchema"
+import { UInputTester } from "../Controls/UInput/UInputTester"
+import UInput from "../Controls/UInput/UInput"
+import UArchesTreat from "../Controls/UArchesTreat/UArchesTreat"
+import { UArchesTreatTester } from "../Controls/UArchesTreat/UArchesTreatTester"
+import { USelectTester } from "../Controls/USelect/USelectTester"
+import USelect from "../Controls/USelect/USelect"
+
+const UJsonEditor: FC<{ schema: any; editorDidMount: any }> = ({
+  schema,
+  editorDidMount,
+}) => {
+  const options = {
+    selectOnLineNumbers: true,
+  }
+  const onChange = useCallback((newValue: any, e: any) => {
+    console.log("onChange", newValue, e)
+  }, [])
+  return (
+    <MonacoEditor
+      height="600"
+      language="json"
+      theme="vs-dark"
+      value={schema}
+      options={options}
+      onChange={onChange}
+      editorDidMount={editorDidMount}
+    />
+  )
+}
 
 const Dashboard: FC = () => {
   const renderers = [
     ...materialRenderers,
     //register custom renderers
+    { tester: UArchesTreatTester, renderer: UArchesTreat },
+    { tester: USelectTester, renderer: USelect },
     { tester: URadioGroupTester, renderer: URadioGroup },
+    { tester: UInputTester, renderer: UInput },
   ]
-
-  const [jsonSchema, setJsonSchema] = useState<any>(
-    JSON.stringify(jsonSchemaDefault, null, 2),
-  )
 
   const [uiSchema, setUiSchema] = useState<any>(
     JSON.stringify(uiSchemaDefault, null, 2),
+  )
+
+  const [jsonSchema, setJsonSchema] = useState<any>(
+    JSON.stringify(jsonSchemaDefault, null, 2),
   )
 
   const [data, setData] = useState()
@@ -62,25 +96,6 @@ const Dashboard: FC = () => {
     [schemaModel],
   )
 
-  const uiSchemaModel = useMemo(
-    () =>
-      getMonacoModelForUri(modelUri, JSON.stringify(uiSchemaDefault, null, 2)),
-    [modelUri],
-  )
-
-  const uiSchemaEditorDidMount = useCallback(
-    (editor: monaco.editor.IStandaloneCodeEditor, monaco: any) => {
-      console.log("uiSchemaModelschemaEditorDidMount", editor)
-      editor.focus()
-      editor.setModel(uiSchemaModel)
-    },
-    [uiSchemaModel],
-  )
-
-  const onChange = useCallback((newValue: any, e: any) => {
-    console.log("onChange", newValue, e)
-  }, [])
-
   return (
     <>
       <Grid container spacing={2}>
@@ -92,13 +107,9 @@ const Dashboard: FC = () => {
                   {"JSON Schema"}
                 </Typography>
               </Box>
-              <MonacoEditor
-                height="600"
-                language="json"
-                theme="vs-dark"
-                value={jsonSchema}
-                options={options}
-                onChange={onChange}
+
+              <UJsonEditor
+                schema={jsonSchema}
                 editorDidMount={schemaEditorDidMount}
               />
             </Paper>
@@ -106,40 +117,10 @@ const Dashboard: FC = () => {
 
           <Grid item container spacing={2} md={12}>
             <Grid item md={6} sx={{ width: "100%" }}>
-              <Paper variant="outlined" sx={{ width: "100%" }}>
-                <Box>
-                  <Typography variant={"h5"} color={"primary"}>
-                    {"UI Schema"}
-                  </Typography>
-                </Box>
-                <MonacoEditor
-                  height="600"
-                  language="json"
-                  theme="vs-dark"
-                  value={uiSchema}
-                  options={options}
-                  onChange={onChange}
-                  editorDidMount={uiSchemaEditorDidMount}
-                />
-              </Paper>
+              <UiSchema uiSchema={uiSchema} />
             </Grid>
             <Grid item md={6}>
-              <Paper variant="outlined" sx={{ width: "100%" }}>
-                <Box>
-                  <Typography variant={"h5"} color={"primary"}>
-                    {"Data"}
-                  </Typography>
-                </Box>
-                <MonacoEditor
-                  height="600"
-                  language="json"
-                  theme="vs-dark"
-                  value={data}
-                  options={options}
-                  onChange={onChange}
-                  editorDidMount={uiSchemaEditorDidMount}
-                />
-              </Paper>
+              <ResultView jsonData={uiSchema} />
             </Grid>
           </Grid>
         </Grid>
