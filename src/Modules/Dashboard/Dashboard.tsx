@@ -25,6 +25,8 @@ import UArchesTreat from "../Controls/UArchesTreat/UArchesTreat"
 import { UArchesTreatTester } from "../Controls/UArchesTreat/UArchesTreatTester"
 import { USelectTester } from "../Controls/USelect/USelectTester"
 import USelect from "../Controls/USelect/USelect"
+import UArchLayout from "../Controls/UArchLayout/UArchLayout"
+import { UArchLayoutTester } from "../Controls/UArchLayout/UArchLayoutTester"
 
 const UJsonEditor: FC<{ schema: any; editorDidMount: any }> = ({
   schema,
@@ -54,6 +56,7 @@ const Dashboard: FC = () => {
     ...materialRenderers,
     //register custom renderers
     { tester: UArchesTreatTester, renderer: UArchesTreat },
+    { tester: UArchLayoutTester, renderer: UArchLayout },
     { tester: USelectTester, renderer: USelect },
     { tester: URadioGroupTester, renderer: URadioGroup },
     { tester: UInputTester, renderer: UInput },

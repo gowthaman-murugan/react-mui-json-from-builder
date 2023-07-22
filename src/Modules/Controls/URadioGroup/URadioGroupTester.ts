@@ -16,8 +16,6 @@ export const URadioGroupTester: RankedTester = rankWith(
   3,
   and(
     schemaMatches((schema, uiSchema) => {
-      console.log(uiSchema, "...schema..sss: ", schema)
-
       return schema.hasOwnProperty("isRadioGroup")
     }),
   ),

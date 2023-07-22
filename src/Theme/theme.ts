@@ -127,6 +127,11 @@ const uSmileTheme: ThemeOptions = {
         variant: "outlined", // 'outlined' | 'standard' | 'filled'
       },
     },
+    MuiSelect: {
+      defaultProps: {
+        variant: "outlined", // 'outlined' | 'standard' | 'filled'
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: {

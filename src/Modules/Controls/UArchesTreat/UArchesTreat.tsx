@@ -3,15 +3,13 @@ import { withJsonFormsControlProps } from "@jsonforms/react"
 import {
   Box,
   FormControl,
-  FormLabel,
-  FormGroup,
   FormControlLabel,
   Checkbox,
-  FormHelperText,
-  Grid,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
 } from "@mui/material"
 import { FC, useState } from "react"
-import { USelect } from "../USelect/USelect"
 
 const UArchesTreat: FC<ControlProps> = ({
   handleChange,
@@ -20,13 +18,23 @@ const UArchesTreat: FC<ControlProps> = ({
   label,
   description,
   schema,
+  rootSchema,
+  uischema,
 }) => {
+  const elementKeys = schema.archKeys
+  const elementProps = schema.properties
   const [state, setState] = useState({
     gilad: true,
     jason: false,
     antoine: false,
   })
-  console.log(schema, ".xxx..label", label, description, path, data)
+
+  const [age, setAge] = useState("")
+
+  const handleChangeSelect = (event: SelectChangeEvent) => {
+    setAge(event.target.value as string)
+  }
+  console.log(".xxx.................schema", schema)
 
   const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setState({
@@ -35,35 +43,55 @@ const UArchesTreat: FC<ControlProps> = ({
     })
   }
 
-  const { gilad, jason, antoine } = state
-  const error = [gilad, jason, antoine].filter((v) => v).length !== 2
   return (
-    <Box>
-      {/* <FormControl sx={{ m: 1 }} component="fieldset" variant="standard">
-        <FormLabel component="legend">{label}</FormLabel>
-        <FormGroup>
-          <Box
-            sx={{
-              flexDirection: "row",
-              display: "flex",
-            }}
-          >
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={gilad}
-                  onChange={handleChangeInput}
-                  name="gilad"
-                />
-              }
-              label={schema.properties.upper_to_treat.properties.upper.label}
-            />
+    <>
+      <Box
+        sx={{
+          flexDirection: "row",
+          flexWrap: "wrap",
+          display: "flex",
+        }}
+      >
+        <FormControlLabel
+          control={
+            <Checkbox onChange={handleChangeInput} name={elementKeys[0]} />
+          }
+          label={elementProps[elementKeys[0]].label}
+        />
 
-            <USelect />
-          </Box>
-        </FormGroup> 
-      </FormControl>*/}
-    </Box>
+        <FormControl sx={{ minWidth: 220 }}>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={age || elementProps[elementKeys[1]].default}
+            onChange={handleChangeSelect}
+          >
+            {elementProps[elementKeys[1]].enum?.map((e, i) => (
+              <MenuItem key={`${e}+${i}`} value={e}>
+                {e}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Box>
+      <Box
+        sx={{
+          flexDirection: "column",
+          display: "flex",
+          mx: 2,
+        }}
+      >
+        {elementProps[elementKeys[2]].items.anyOf.map((item) => (
+          <FormControlLabel
+            key={item.const}
+            control={
+              <Checkbox onChange={handleChangeInput} name={item.const} />
+            }
+            label={item.title}
+          />
+        ))}
+      </Box>
+    </>
   )
 }
 

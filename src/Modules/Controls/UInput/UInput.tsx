@@ -11,8 +11,6 @@ const UInput: FC<ControlProps> = ({
   label,
   description,
 }) => {
-  console.log("...path: ", path)
-
   return (
     <>
       <InputLabel>{description}</InputLabel>

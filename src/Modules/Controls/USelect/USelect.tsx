@@ -9,29 +9,31 @@ import {
 } from "@mui/material"
 import { FC, useState } from "react"
 
-const USelect: FC<ControlProps> = ({ label, path }) => {
-  const [age, setAge] = useState("")
-
-  console.log("..ddd...path", path)
+const USelect: FC<ControlProps> = ({ label, path, schema }) => {
+  const [age, setAge] = useState(schema.default || "")
 
   const handleChange = (event: SelectChangeEvent) => {
     setAge(event.target.value as string)
   }
   return (
     <>
-      <FormControl fullWidth>
-        {label && (
-          <InputLabel id="demo-simple-select-label">{label}</InputLabel>
-        )}
+      <FormControl>
+        {label && <InputLabel id={`${path}-label}`}>{label}</InputLabel>}
         <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
+          labelId={`${path}-label}`}
+          id={`${path}-select}`}
           value={age}
           onChange={handleChange}
         >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          {schema &&
+            schema.enum &&
+            schema.enum.map((e, index) => {
+              return (
+                <MenuItem key={index} value={e}>
+                  {e}
+                </MenuItem>
+              )
+            })}
         </Select>
       </FormControl>
     </>

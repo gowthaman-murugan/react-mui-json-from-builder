@@ -1,4 +1,10 @@
-import { RankedTester, and, rankWith, schemaMatches } from "@jsonforms/core"
+import {
+  RankedTester,
+  and,
+  rankWith,
+  schemaMatches,
+  uiTypeIs,
+} from "@jsonforms/core"
 
 // export default rankWith(
 //   3, //increase rank as needed

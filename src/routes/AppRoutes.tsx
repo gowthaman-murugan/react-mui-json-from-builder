@@ -6,6 +6,7 @@ import UIView from "../Modules/Dashboard/UIView"
 import Schema from "../Modules/Dashboard/Schema"
 import UiSchema from "../Modules/Dashboard/UiSchema"
 import Result from "../Modules/Dashboard/Result"
+import UComponents from "../Modules/UComponents"
 
 export const AppRoutes: FC = () => {
   return (
@@ -18,6 +19,8 @@ export const AppRoutes: FC = () => {
           <Route path={"data"} element={<Result />} />
           <Route path={"*"} element={<Navigate to={"ui"} replace />} />
         </Route>
+        <Route path={"c"} element={<UComponents />} />
+
       </Route>
     </Routes>
   )
