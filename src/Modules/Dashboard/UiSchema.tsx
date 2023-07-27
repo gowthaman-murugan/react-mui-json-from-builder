@@ -2,7 +2,7 @@ import { Paper, Box, Typography } from "@mui/material"
 import { FC, useCallback, useMemo, useState } from "react"
 import MonacoEditor, { monaco } from "react-monaco-editor"
 import { getMonacoModelForUri } from "./Editor/jsonSchemaValidation"
-import { uiSchemaDefault } from "./testJson"
+import { uiSchemaDefault } from "./prescriptionFormJson"
 import { Uri } from "monaco-editor"
 
 const UiSchema: FC<{ uiSchema: any }> = ({ uiSchema }) => {

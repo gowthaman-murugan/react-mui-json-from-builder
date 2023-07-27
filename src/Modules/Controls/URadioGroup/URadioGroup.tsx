@@ -4,33 +4,51 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
+  FormHelperText,
 } from "@mui/material"
-import { FC } from "react"
+import { ChangeEvent, FC, useState } from "react"
 
 import { withJsonFormsControlProps } from "@jsonforms/react"
 import { ControlProps } from "@jsonforms/core"
-//import { Rating } from "./Rating"
 
-const URadioGroup: FC<ControlProps> = ({ schema }) => {
+const URadioGroup: FC<ControlProps> = ({
+  schema,
+  errors,
+  path,
+  label,
+  handleChange,
+}) => {
+  console.log(schema, ".URadioGroup..errors.", errors)
+  const [value, setValue] = useState("")
+
+  const handleChangeInput = (event: ChangeEvent<HTMLInputElement>) => {
+    const val = (event.target as HTMLInputElement).value
+    setValue(val)
+    handleChange(path, val)
+  }
+
   return (
-    <FormControl>
-      <FormLabel id="demo-radio-buttons-group-label">{schema.label}</FormLabel>
+    <FormControl error={errors ? true : false} sx={{ my: 1 }}>
+      <FormLabel id={`${path}-label`}>{label}</FormLabel>
       <RadioGroup
-        aria-labelledby="demo-radio-buttons-group-label"
-        name="radio-buttons-group"
+        aria-labelledby={`${path}-label`}
+        name={`${path}`}
+        value={value}
+        onChange={handleChangeInput}
       >
         {schema.enum &&
-          schema.enum.map((value, index) => {
+          schema.enum.map((v, index) => {
             return (
               <FormControlLabel
                 key={index}
-                value={value}
+                value={v}
                 control={<Radio />}
-                label={value}
+                label={v}
               />
             )
           })}
       </RadioGroup>
+      <FormHelperText sx={{ marginLeft: 0 }}>{errors}</FormHelperText>
     </FormControl>
   )
 }

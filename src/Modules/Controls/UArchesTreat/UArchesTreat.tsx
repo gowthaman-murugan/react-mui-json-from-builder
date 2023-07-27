@@ -9,7 +9,7 @@ import {
   Select,
   SelectChangeEvent,
 } from "@mui/material"
-import { FC, useState } from "react"
+import { FC, useEffect, useState } from "react"
 
 const UArchesTreat: FC<ControlProps> = ({
   handleChange,
@@ -20,25 +20,31 @@ const UArchesTreat: FC<ControlProps> = ({
   schema,
   rootSchema,
   uischema,
+  errors,
 }) => {
   const elementKeys = schema.archKeys
   const elementProps = schema.properties
-  const [state, setState] = useState({
-    gilad: true,
-    jason: false,
-    antoine: false,
-  })
+  const [selectedChecks, setSelectedChecks] = useState({})
+  const [selected, setSelected] = useState(
+    "" || elementProps[elementKeys[1]].default,
+  )
 
-  const [age, setAge] = useState("")
+
+  useEffect(() => {
+    console.log("....selectedChecks..", selectedChecks)
+  }, [selectedChecks])
+
+  useEffect(() => {
+    console.log("....selected..", selected)
+  }, [selected])
 
   const handleChangeSelect = (event: SelectChangeEvent) => {
-    setAge(event.target.value as string)
+    setSelected(event.target.value as string)
   }
-  console.log(".xxx.................schema", schema)
 
   const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setState({
-      ...state,
+    setSelectedChecks({
+      ...selectedChecks,
       [event.target.name]: event.target.checked,
     })
   }
@@ -50,6 +56,7 @@ const UArchesTreat: FC<ControlProps> = ({
           flexDirection: "row",
           flexWrap: "wrap",
           display: "flex",
+          mb: 2,
         }}
       >
         <FormControlLabel
@@ -63,7 +70,7 @@ const UArchesTreat: FC<ControlProps> = ({
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={age || elementProps[elementKeys[1]].default}
+            value={selected}
             onChange={handleChangeSelect}
           >
             {elementProps[elementKeys[1]].enum?.map((e, i) => (
@@ -77,7 +84,7 @@ const UArchesTreat: FC<ControlProps> = ({
       <Box
         sx={{
           flexDirection: "column",
-          display: "flex",
+          display: selectedChecks[elementKeys[0]] ? "flex" : "none",
           mx: 2,
         }}
       >

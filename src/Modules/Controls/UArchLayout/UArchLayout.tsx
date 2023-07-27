@@ -13,12 +13,16 @@ const MyGroupRenderer: FC<LayoutProps> = (props) => {
     path: path,
     visible: visible,
     uischema: uischema,
-    renderers: renderers,
+    renderers: renderers
   }
+
+  console.log(".........sdsd...dsd...", layoutProps)
   return (
-    <Box sx={{ display: "flex", my: 2, }}>
+    <Box sx={{ display: "flex", my: 2 }}>
       <FormControl component="fieldset" variant="standard">
-        <FormLabel sx={{mb:1}} component="legend">{uischema.label}</FormLabel>
+        <FormLabel sx={{ mb: 1 }} component="legend">
+          {uischema.label}
+        </FormLabel>
         <MaterialLayoutRenderer direction={"column"} {...layoutProps} />
       </FormControl>
     </Box>

@@ -1,4 +1,11 @@
-import { FormControl, InputLabel, TextField } from "@mui/material"
+import {
+  FormControl,
+  FormHelperText,
+  Input,
+  InputLabel,
+  OutlinedInput,
+  TextField,
+} from "@mui/material"
 import { FC } from "react"
 
 import { withJsonFormsControlProps } from "@jsonforms/react"
@@ -9,36 +16,24 @@ const UInput: FC<ControlProps> = ({
   path,
   data,
   label,
-  description,
+  errors,
 }) => {
   return (
     <>
-      <InputLabel>{description}</InputLabel>
-
-      <InputLabel>{label}</InputLabel>
-      <TextField
-        onChange={(event: any) => handleChange(path, event.target.value)}
-        fullWidth
-        variant="outlined"
-        value={data || ""}
-      />
+      <InputLabel error={errors ? true : false} sx={{ mb: 1 }}>
+        {label}
+      </InputLabel>
+      <FormControl error={errors ? true : false} variant={"outlined"} fullWidth>
+        <OutlinedInput
+          id="component-outlined"
+          defaultValue="Composed TextField"
+          value={data || ""}
+          onChange={(event: any) => handleChange(path, event.target.value)}
+        />
+        <FormHelperText sx={{ marginLeft: 0 }}>{errors}</FormHelperText>
+      </FormControl>
     </>
   )
 }
 
 export default withJsonFormsControlProps(UInput)
-
-// interface RatingControlProps {
-//   data: any
-//   handleChange(path: string, value: any): void
-//   path: string
-// }
-
-// const RatingControl = ({ data, handleChange, path }: RatingControlProps) => (
-//   <Rating
-//     value={data}
-//     updateValue={(newValue: number) => handleChange(path, newValue)}
-//   />
-// )
-
-// export default withJsonFormsControlProps(RatingControl)
