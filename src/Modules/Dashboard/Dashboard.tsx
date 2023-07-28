@@ -9,7 +9,7 @@ import {
   Tabs,
   Typography,
 } from "@mui/material"
-import { FC, useCallback, useMemo, useState } from "react"
+import { FC, useCallback, useEffect, useMemo, useState } from "react"
 import MonacoEditor from "react-monaco-editor"
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api"
 import { JsonForms } from "@jsonforms/react"
@@ -101,6 +101,10 @@ const Dashboard: FC = () => {
   )
 
   const [data, setData] = useState({})
+
+  useEffect(() => {
+    console.log("...OUTPUT json", data);
+  }, [data])
 
   const options = {
     selectOnLineNumbers: true,

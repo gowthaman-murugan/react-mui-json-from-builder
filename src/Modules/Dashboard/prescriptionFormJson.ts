@@ -9,47 +9,91 @@ export const jsonSchemaDefault = {
 			"label": "Estimated Treatment Time (months)"
 		},
 		
-		"upper_arch": {
-			"archKeys": ["upper", "upper_aligner", "upper_aligner_items"],
-			"isArchesTreat1": true,
-			"type": "object",
-			"properties": {
-				"upper": {
-					"type": "boolean",
-					"label": "Upper"
+        "arches_to_treat": {
+		  "isArchesTreat": true,
+		  "title": "Which Arches would you like to treat?",
+		  "archKeys": ["isChecked","aligner_type", "aligner_items"],
+          "type": "object",
+		  "properties": {
+			"upper": {
+				"type": "object",
+				"title": "",
+				"properties": {
+					"isChecked": {
+						"type": "boolean",
+						"label": "Upper"
+					},
+					"aligner_type": {
+						"isUSelect": true,
+						"type": "string",
+						"enum": [
+							"Aligner",
+							"Retainer Only"
+						],
+						"default": "Aligner"
+					},
+					"aligner_items":{ 
+						"type": "array",
+						 "uniqueItems": true,
+						 "items": {
+							 "oneOf": [
+								 {
+									 "const": "bracket_removal",
+									 "title": "Bracket Removal"
+								 },
+								 {
+									 "const": "cover_lingual_bar",
+									 "title": "Cover Lingual Bar"
+								 },
+								 {
+									 "const": "remove_lingual_bar",
+									 "title": "Remove Lingual Bar"
+								 }
+							 ]
+						 }}
 				},
-				"upper_aligner": {
-					"isUSelect": true,
-					"type": "string",
-					"enum": [
-						"Aligner",
-						"Retainer Only"
-					],
-					"default": "Aligner"
-				},
-				"upper_aligner_items":{ $ref: "#/definitions/aligner_items"}
+				
+			},
+			"lower": {
+				"type": "object",
+				"properties": {
+					"isChecked": {
+						"type": "boolean",
+						"label": "Lower"
+					},
+					"aligner_type": {
+						"isUSelect": true,
+						"type": "string",
+						"enum": [
+							"Aligner",
+							"Retainer Only"
+						],
+						"default": "Aligner"
+					},
+					"aligner_items":{ 
+						"type": "array",
+				 "uniqueItems": true,
+				 "items": {
+					 "oneOf": [
+						 {
+							 "const": "bracket_removal",
+							 "title": "Bracket Removal"
+						 },
+						 {
+							 "const": "cover_lingual_bar",
+							 "title": "Cover Lingual Bar"
+						 },
+						 {
+							 "const": "remove_lingual_bar",
+							 "title": "Remove Lingual Bar"
+						 }
+					 ]
+				 }}
+				}
 			}
-		},
-		"lower_arch": {
-			"archKeys": ["lower", "lower_aligner", "lower_aligner_items"],
-			"isArchesTreat1": true,
-			"type": "object",
-			"properties": {
-				"lower": {
-					"type": "boolean",
-					"label": "Lower"
-				},
-				"lower_aligner": {
-					"isUSelect": true,
-					"type": "string",
-					"enum": [
-						"Aligner",
-						"Retainer Only"
-					],
-					"default": "Aligner"
-				},
-				"lower_aligner_items": { $ref: "#/definitions/aligner_items"}
-			}
+
+		  }
+
 		},
 		"selected_teeth_to_treat": {
 			"type": "string",
@@ -105,8 +149,7 @@ export const jsonSchemaDefault = {
 	},
 	"required": [
 		"estimated_treatment_time",
-		"upper_arch",
-		"lower_arch",
+		"arches_to_treat",
 		"selected_teeth_to_treat",
 		"class_correction",
 		"midline_correction",
@@ -147,47 +190,36 @@ export const uiSchemaDefault = {
 		{
 			"type": "VerticalLayout",
 			"elements": [
-				// {
-				//   "type": "Control",
-				//   "label": true,
-				//   "scope": "#/properties/estimated_treatment_time"
-				// },
 				{
-					"type": "ArchGroup",
-					"label": "Which Arches would you like to treat?",
-					"elements": [
-						{
-							"type": "Control",
-							"label": false,
-							"scope": "#/properties/upper_arch"
-						},
-						{
-							"type": "Control",
-							"label": false,
-							"scope": "#/properties/lower_arch"
-						}
-					]
+				  "type": "Control",
+				  "label": true,
+				  "scope": "#/properties/estimated_treatment_time"
 				},
-				// {
-				//   "type": "Control",
-				//   "scope": "#/properties/selected_teeth_to_treat"
-				// },
-				// {
-				//   "type": "Control",
-				//   "scope": "#/properties/class_correction"
-				// },
-				// {
-				//   "type": "Control",
-				//   "scope": "#/properties/midline_correction"
-				// },
-				// {
-				//   "type": "Control",
-				//   "scope": "#/properties/crossbite_correction"
-				// },
-				// {
-				//   "type": "Control",
-				//   "scope": "#/properties/planning_for_restorations"
-				// }
+				{
+					"type": "Control",
+					"label": true,
+					"scope": "#/properties/arches_to_treat"
+				  },
+				{
+				  "type": "Control",
+				  "scope": "#/properties/selected_teeth_to_treat"
+				},
+				{
+				  "type": "Control",
+				  "scope": "#/properties/class_correction"
+				},
+				{
+				  "type": "Control",
+				  "scope": "#/properties/midline_correction"
+				},
+				{
+				  "type": "Control",
+				  "scope": "#/properties/crossbite_correction"
+				},
+				{
+				  "type": "Control",
+				  "scope": "#/properties/planning_for_restorations"
+				}
 			]
 		}
 	]
