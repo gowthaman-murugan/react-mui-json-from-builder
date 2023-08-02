@@ -18,7 +18,6 @@ const URadioGroup: FC<ControlProps> = ({
   label,
   handleChange,
 }) => {
-  console.log(schema, ".URadioGroup..errors.", errors)
   const [value, setValue] = useState("")
 
   const handleChangeInput = (event: ChangeEvent<HTMLInputElement>) => {

@@ -27,6 +27,10 @@ import { USelectTester } from "../Controls/USelect/USelectTester"
 import USelect from "../Controls/USelect/USelect"
 import UArchLayout from "../Controls/UArchLayout/UArchLayout"
 import { UArchLayoutTester } from "../Controls/UArchLayout/UArchLayoutTester"
+import URadioTextGroup from "../Controls/URadioTextGroup/URadioTextGroup"
+import { URadioTextGroupTester } from "../Controls/URadioTextGroup/URadioTextGroupTester"
+import URadioTextGroupLayout from "../Controls/URadioTextGroupLayout/URadioTextGroupLayout"
+import { URadioTextGroupLayoutTester } from "../Controls/URadioTextGroupLayout/URadioTextGroupLayoutTester"
 
 const UJsonEditor: FC<{ schema: any; editorDidMount: any }> = ({
   schema,
@@ -56,9 +60,8 @@ const Dashboard: FC = () => {
 
   const createTranslator =
     (locale: string) => (key: string, defaultMessage: string) => {
-      console.log(
-        `Locale: ${locale}, Key: ${key}, Default Message: ${defaultMessage}`,
-      )
+      console.log("...lcalll.....", locale)
+
       if (key === "error.required") {
         return "This field is required"
       }
@@ -70,7 +73,6 @@ const Dashboard: FC = () => {
 
   const handleChangeTab = (event: React.SyntheticEvent, newValue: string) => {
     console.log("....newValue: ", newValue)
-    setValue(newValue)
     // if (newValue.toString() === "1") {
     //   setJsonSchema(JSON.stringify(jsonSchemaDefault, null, 2))
     // }
@@ -90,6 +92,8 @@ const Dashboard: FC = () => {
     { tester: USelectTester, renderer: USelect },
     { tester: URadioGroupTester, renderer: URadioGroup },
     { tester: UInputTester, renderer: UInput },
+    { tester: URadioTextGroupTester, renderer: URadioTextGroup },
+    { tester: URadioTextGroupLayoutTester, renderer: URadioTextGroupLayout },
   ]
 
   const [uiSchema, setUiSchema] = useState<any>(
@@ -103,7 +107,7 @@ const Dashboard: FC = () => {
   const [data, setData] = useState({})
 
   useEffect(() => {
-    console.log("...OUTPUT json", data);
+    console.log("...OUTPUT json", data)
   }, [data])
 
   const options = {
@@ -185,7 +189,7 @@ const Dashboard: FC = () => {
                 renderers={renderers}
                 cells={materialCells}
                 onChange={({ errors, data }) => {
-                  console.log(".ddd..errrors:", errors)
+                  console.log(" json schema on change:", errors, data)
                   setData(data)
                 }}
               />

@@ -20,7 +20,9 @@ const ArchElement: FC<{
   updateInput: (data: any) => void
 }> = ({ jsonSchema, inputKey, subPropKeys, updateInput }) => {
   const [selectedChecks, setSelectedChecks] = useState({})
-  const [selected, setSelected] = useState("")
+  const [selected, setSelected] = useState<string>(
+    jsonSchema[subPropKeys[1]].default || "",
+  )
 
   const handleChangeSelect = (event: SelectChangeEvent) => {
     setSelected(event.target.value as string)
@@ -110,23 +112,51 @@ const UArchesTreat: FC<ControlProps> = ({
   uischema,
   errors,
 }) => {
+  const [isError, setIsError] = useState<boolean>(true)
+  const [outJson, setOutJson] = useState<any>()
   const propsKeys = Object.keys(schema.properties)
 
-  console.log("..UArchesTreat. xx..", path, label, description, data)
+  console.log(".update path xxxx.errors..", data)
+
+  useEffect(() => {
+    console.log(".update path value...data", data)
+    setIsError(
+      data &&
+        ((data.upper && data.upper.isChecked) ||
+          (data.lower && data.lower.isChecked))
+        ? false
+        : true,
+    )
+  }, [data])
+
+  useEffect(() => {
+
+    let rs = { ...data, ...outJson }
+    console.log(data, "...update path value", outJson)
+    if (rs.lower && !rs.lower.isChecked) {
+      delete rs.lower
+    }
+    if (rs.upper && !rs.upper.isChecked) {
+      delete rs.upper
+    }
+    if(!rs.lower && !rs.upper) {
+      rs = undefined;
+    }
+      handleChange(path, rs)
+  }, [handleChange, outJson, path])
 
   const subProps = (key: string) => {
     return schema.properties[key].properties
   }
 
   const updateInput = useCallback((outData: any) => {
-    console.log(data, ".UArchesTreat..updateInput", outData)
-    handleChange(path, { ...data, ...outData })
+    setOutJson(outData)
   }, [])
 
   return (
     <>
       <FormControl
-        error={errors ? true : false}
+        error={isError}
         component="fieldset"
         variant="standard"
         sx={{ my: 1 }}

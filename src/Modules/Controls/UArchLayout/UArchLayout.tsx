@@ -16,8 +16,7 @@ const MyGroupRenderer: FC<LayoutProps> = (props) => {
     renderers: renderers
   }
 
-  console.log(".........sdsd...dsd...", layoutProps)
-  return (
+   return (
     <Box sx={{ display: "flex", my: 2 }}>
       <FormControl component="fieldset" variant="standard">
         <FormLabel sx={{ mb: 1 }} component="legend">

@@ -20,8 +20,7 @@ const UiSchema: FC<{ uiSchema: any }> = ({ uiSchema }) => {
 
   const uiSchemaEditorDidMount = useCallback(
     (editor: monaco.editor.IStandaloneCodeEditor, monaco: any) => {
-      console.log("uiSchemaModelschemaEditorDidMount", editor)
-      editor.focus()
+       editor.focus()
       editor.setModel(uiSchemaModel)
     },
     [uiSchemaModel],
