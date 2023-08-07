@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Card,
   CardContent,
   CardHeader,
@@ -25,9 +26,7 @@ import UArchesTreat from "../Controls/UArchesTreat/UArchesTreat"
 import { UArchesTreatTester } from "../Controls/UArchesTreat/UArchesTreatTester"
 import { USelectTester } from "../Controls/USelect/USelectTester"
 import USelect from "../Controls/USelect/USelect"
-import UArchLayout from "../Controls/UArchLayout/UArchLayout"
-import { UArchLayoutTester } from "../Controls/UArchLayout/UArchLayoutTester"
-import URadioTextGroup from "../Controls/URadioTextGroup/URadioTextGroup"
+ import URadioTextGroup from "../Controls/URadioTextGroup/URadioTextGroup"
 import { URadioTextGroupTester } from "../Controls/URadioTextGroup/URadioTextGroupTester"
 import URadioTextGroupLayout from "../Controls/URadioTextGroupLayout/URadioTextGroupLayout"
 import { URadioTextGroupLayoutTester } from "../Controls/URadioTextGroupLayout/URadioTextGroupLayoutTester"
@@ -59,6 +58,16 @@ const UJsonEditor: FC<{ schema: any; editorDidMount: any }> = ({
 
 const Dashboard: FC = () => {
   const [value, setValue] = useState(1)
+  const [submitted, setSubmitted] = useState(false)
+
+  const handleSubmit = () => {
+    // Custom logic for handling the form submission
+    // You can access the form data from the 'data' state
+    console.log(data);
+    setSubmitted(true);
+
+    // Additional logic to handle form submission
+  }
 
   const createTranslator =
     (locale: string) => (key: string, defaultMessage: string) => {
@@ -88,7 +97,6 @@ const Dashboard: FC = () => {
     ...materialRenderers,
     //register custom renderers
     { tester: UArchesTreatTester, renderer: UArchesTreat },
-    { tester: UArchLayoutTester, renderer: UArchLayout },
     { tester: USelectTester, renderer: USelect },
     { tester: URadioGroupTester, renderer: URadioGroup },
     { tester: UInputTester, renderer: UInput },
@@ -190,11 +198,19 @@ const Dashboard: FC = () => {
                 data={data}
                 renderers={renderers}
                 cells={materialCells}
+                validationMode={submitted ? 'ValidateAndShow' : 'NoValidation'}
                 onChange={({ errors, data }) => {
                   console.log(" json schema on change:", errors, data)
                   setData(data)
                 }}
               />
+              <Button
+                onClick={handleSubmit} // Add the 'onSubmit' logic here
+                color='primary'
+                variant='contained'
+              >
+                Submit
+              </Button>
             </CardContent>
           </Card>
         </Grid>

@@ -39,9 +39,7 @@ const USelect: FC<ControlProps> = (props) => {
             displayEmpty
             placeholder={"select"}
           >
-            <MenuItem value="">
-              <em>Select</em>
-            </MenuItem>
+            <MenuItem value="">{"Select"}</MenuItem>
             {schema &&
               schema.enum &&
               schema.enum.map((e, index) => {

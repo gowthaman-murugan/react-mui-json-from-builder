@@ -1,16 +1,4 @@
-import {
-  RankedTester,
-  and,
-  isBooleanControl,
-  rankWith,
-  schemaMatches,
-  scopeEndsWith,
-} from "@jsonforms/core"
-
-// export default rankWith(
-//   3, //increase rank as needed
-//   scopeEndsWith("test"), //
-// )
+import { RankedTester, and, rankWith, schemaMatches } from "@jsonforms/core"
 
 export const URadioGroupTester: RankedTester = rankWith(
   3,
@@ -19,5 +7,4 @@ export const URadioGroupTester: RankedTester = rankWith(
       return schema.hasOwnProperty("isRadioGroup")
     }),
   ),
-
 )

@@ -1,15 +1,4 @@
-import {
-  RankedTester,
-  and,
-  rankWith,
-  schemaMatches,
-  uiTypeIs,
-} from "@jsonforms/core"
-
-// export default rankWith(
-//   3, //increase rank as needed
-//   scopeEndsWith("test"), //
-// )
+import { RankedTester, and, rankWith, schemaMatches } from "@jsonforms/core"
 
 export const UArchesTreatTester: RankedTester = rankWith(
   3,

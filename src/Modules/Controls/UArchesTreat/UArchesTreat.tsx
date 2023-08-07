@@ -101,17 +101,8 @@ const ArchElement: FC<{
   )
 }
 
-const UArchesTreat: FC<ControlProps> = ({
-  handleChange,
-  path,
-  data,
-  label,
-  description,
-  schema,
-  rootSchema,
-  uischema,
-  errors,
-}) => {
+const UArchesTreat: FC<ControlProps> = (props) => {
+  const { handleChange, path, data, label, schema, errors } = props
   const [isError, setIsError] = useState<boolean>(true)
   const [outJson, setOutJson] = useState<any>()
   const propsKeys = Object.keys(schema.properties)
@@ -127,7 +118,6 @@ const UArchesTreat: FC<ControlProps> = ({
   }, [data])
 
   useEffect(() => {
-
     let rs = { ...data, ...outJson }
     if (rs.lower && !rs.lower.isChecked) {
       delete rs.lower
@@ -135,10 +125,10 @@ const UArchesTreat: FC<ControlProps> = ({
     if (rs.upper && !rs.upper.isChecked) {
       delete rs.upper
     }
-    if(!rs.lower && !rs.upper) {
-      rs = undefined;
+    if (!rs.lower && !rs.upper) {
+      rs = undefined
     }
-      handleChange(path, rs)
+    handleChange(path, rs)
   }, [handleChange, outJson, path])
 
   const subProps = (key: string) => {
@@ -152,7 +142,7 @@ const UArchesTreat: FC<ControlProps> = ({
   return (
     <>
       <FormControl
-        error={isError}
+        error={isError && errors}
         component="fieldset"
         variant="standard"
         sx={{ my: 1 }}
