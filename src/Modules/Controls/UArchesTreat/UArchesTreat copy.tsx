@@ -29,15 +29,6 @@ const UArchesTreat1: FC<ControlProps> = ({
     "" || elementProps[elementKeys[1]].default,
   )
 
-
-  useEffect(() => {
-    console.log("....selectedChecks..", selectedChecks)
-  }, [selectedChecks])
-
-  useEffect(() => {
-    console.log("....selected..", selected)
-  }, [selected])
-
   const handleChangeSelect = (event: SelectChangeEvent) => {
     setSelected(event.target.value as string)
   }

@@ -23,7 +23,6 @@ export const jsonSchemaDefault = {
 							"label": "Upper"
 						},
 						"aligner_type": {
-							"isUSelect": true,
 							"type": "string",
 							"enum": [
 								"Aligner",
@@ -62,7 +61,6 @@ export const jsonSchemaDefault = {
 							"label": "Lower"
 						},
 						"aligner_type": {
-							"isUSelect": true,
 							"type": "string",
 							"enum": [
 								"Aligner",
@@ -183,10 +181,33 @@ export const jsonSchemaDefault = {
 				"Limited Treatment"],
 
 		},
+		"deepbite_template_instructions":{
+          "title": "Deep Bite Instructions",
+		  $ref: "#/definitions/specific_instruction"
+		},
+		"spacing_template_instructions":{
+			"title": "Spacing Instructions",
+			$ref: "#/definitions/specific_instruction"
+		  },
+		  "crowding_template_instructions":{
+			"title": "Crowding Instructions",
+			$ref: "#/definitions/specific_instruction"
+		  },
+		  "openbite_template_instructions":{
+			"title": "Open Bite Instructions",
+			$ref: "#/definitions/specific_instruction"
+		  },
+		  "limitedtreatment_template_instructions":{
+			"title": "Limited TreatmentInstructions",
+			$ref: "#/definitions/specific_instruction"
+		  },
 		"case_specific_instructions":{
-			"label": "Case Specific Instructions",
+			"title": "Case Specific Instructions",
 			"type": "string",
-			"isInput": true,
+			"isTextarea": true,
+			"options": {
+				"rows": 6
+			}
  		}
 	},
 	"required": [
@@ -200,27 +221,13 @@ export const jsonSchemaDefault = {
 
 	],
 	"definitions": {
-		"aligner_items": {
-			"type": "array",
-			"uniqueItems": true,
-			"isMultiChoice": "true",
-			"items": {
-				"anyOf": [
-					{
-						"const": "bracket_removal",
-						"title": "Bracket Removal"
-					},
-					{
-						"const": "cover_lingual_bar",
-						"title": "Cover Lingual Bar"
-					},
-					{
-						"const": "remove_lingual_bar",
-						"title": "Remove Lingual Bar"
-					}
-				]
+		"specific_instruction":{
+			"type": "string",
+			"isTextarea": true,
+			"options": {
+				"rows": 8
 			}
-		},
+		}
 	}
 }
 
@@ -271,6 +278,77 @@ export const uiSchemaDefault = {
 				},
 				{
 					"type": "Control",
+					"scope": "#/properties/deepbite_template_instructions",
+					"label": true,
+					"rule": {
+						"effect": "SHOW",
+						"condition": {
+						  "scope": "#/properties/smart_rx_template",
+						  "schema": {
+							"const": "Deep Bite"
+						  }
+						}
+					  }
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/spacing_template_instructions",
+					"label": true,
+					"rule": {
+						"effect": "SHOW",
+						"condition": {
+						  "scope": "#/properties/smart_rx_template",
+						  "schema": {
+							"const": "Spacing"
+						  }
+						}
+					  }
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/crowding_template_instructions",
+					"label": true,
+					"rule": {
+						"effect": "SHOW",
+						"condition": {
+						  "scope": "#/properties/smart_rx_template",
+						  "schema": {
+							"const": "Crowding"
+						  }
+						}
+					  }
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/openbite_template_instructions",
+					"label": true,
+					"rule": {
+						"effect": "SHOW",
+						"condition": {
+						  "scope": "#/properties/smart_rx_template",
+						  "schema": {
+							"const": "Open Bite"
+						  }
+						}
+					  }
+				},
+				{
+					"type": "Control",
+					"scope": "#/properties/limitedtreatment_template_instructions",
+					"label": true,
+					"rule": {
+						"effect": "SHOW",
+						"condition": {
+						  "scope": "#/properties/smart_rx_template",
+						  "schema": {
+							"const": "Limited Treatment"
+						  }
+						}
+					  }
+				},
+				
+				{
+					"type": "Control",
 					"scope": "#/properties/case_specific_instructions",
 					"label": true,
 				},
@@ -278,7 +356,6 @@ export const uiSchemaDefault = {
 		}
 	]
 }
-
 
 export const defaultData = {
 	"arches_to_treat": {

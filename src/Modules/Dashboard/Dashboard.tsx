@@ -31,6 +31,8 @@ import URadioTextGroup from "../Controls/URadioTextGroup/URadioTextGroup"
 import { URadioTextGroupTester } from "../Controls/URadioTextGroup/URadioTextGroupTester"
 import URadioTextGroupLayout from "../Controls/URadioTextGroupLayout/URadioTextGroupLayout"
 import { URadioTextGroupLayoutTester } from "../Controls/URadioTextGroupLayout/URadioTextGroupLayoutTester"
+import { UTextareaTester } from "../Controls/UTextarea/UTextareaTester"
+import UTextarea from "../Controls/UTextarea/UTextarea"
 
 const UJsonEditor: FC<{ schema: any; editorDidMount: any }> = ({
   schema,
@@ -60,8 +62,6 @@ const Dashboard: FC = () => {
 
   const createTranslator =
     (locale: string) => (key: string, defaultMessage: string) => {
-      console.log("...lcalll.....", locale)
-
       if (key === "error.required") {
         return "This field is required"
       }
@@ -94,6 +94,8 @@ const Dashboard: FC = () => {
     { tester: UInputTester, renderer: UInput },
     { tester: URadioTextGroupTester, renderer: URadioTextGroup },
     { tester: URadioTextGroupLayoutTester, renderer: URadioTextGroupLayout },
+    { tester: UTextareaTester, renderer: UTextarea },
+
   ]
 
   const [uiSchema, setUiSchema] = useState<any>(

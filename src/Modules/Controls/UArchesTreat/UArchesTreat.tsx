@@ -116,10 +116,7 @@ const UArchesTreat: FC<ControlProps> = ({
   const [outJson, setOutJson] = useState<any>()
   const propsKeys = Object.keys(schema.properties)
 
-  console.log(".update path xxxx.errors..", data)
-
   useEffect(() => {
-    console.log(".update path value...data", data)
     setIsError(
       data &&
         ((data.upper && data.upper.isChecked) ||
@@ -132,7 +129,6 @@ const UArchesTreat: FC<ControlProps> = ({
   useEffect(() => {
 
     let rs = { ...data, ...outJson }
-    console.log(data, "...update path value", outJson)
     if (rs.lower && !rs.lower.isChecked) {
       delete rs.lower
     }

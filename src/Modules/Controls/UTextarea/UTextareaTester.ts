@@ -1,9 +1,9 @@
 import { RankedTester, and, rankWith, schemaMatches } from "@jsonforms/core"
-export const UInputTester: RankedTester = rankWith(
+export const UTextareaTester: RankedTester = rankWith(
   3,
   and(
     schemaMatches((schema) => {
-      return schema.hasOwnProperty("isInput")
+      return schema.hasOwnProperty("isTextarea")
     }),
   ),
 )

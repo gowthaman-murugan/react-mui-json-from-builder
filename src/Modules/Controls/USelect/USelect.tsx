@@ -1,4 +1,4 @@
-import { ControlProps } from "@jsonforms/core"
+import { ControlProps, computeLabel } from "@jsonforms/core"
 import { withJsonFormsControlProps } from "@jsonforms/react"
 import {
   FormControl,
@@ -10,11 +10,13 @@ import {
 } from "@mui/material"
 import { FC, useState } from "react"
 
-const USelect: FC<ControlProps> = ({ label, path, schema, errors }) => {
-  const [age, setAge] = useState(schema.default || "")
+const USelect: FC<ControlProps> = (props) => {
+  const { label, path, schema, errors, data, handleChange } = props
+  const [value, setValue] = useState(schema.default || "")
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value as string)
+  const handleChangeSelect = (event: SelectChangeEvent) => {
+    setValue(event.target.value as string)
+    handleChange(path, event.target.value)
   }
   return (
     <>
@@ -32,9 +34,14 @@ const USelect: FC<ControlProps> = ({ label, path, schema, errors }) => {
           <Select
             labelId={`${path}-label}`}
             id={`${path}-select}`}
-            value={age}
-            onChange={handleChange}
+            value={value}
+            onChange={handleChangeSelect}
+            displayEmpty
+            placeholder={"select"}
           >
+            <MenuItem value="">
+              <em>Select</em>
+            </MenuItem>
             {schema &&
               schema.enum &&
               schema.enum.map((e, index) => {

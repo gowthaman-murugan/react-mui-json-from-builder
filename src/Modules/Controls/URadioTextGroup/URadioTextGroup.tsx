@@ -26,9 +26,6 @@ const URadioTextGroup: FC<LayoutProps> = (props) => {
     enabled: enabled,
     data: data,
   }
-
-  console.log(uischema, "......sss.....sss...", layoutProps)
-
   const delegateSchema = resolveSchema(
     schema,
     layoutProps.elements[0].scope,

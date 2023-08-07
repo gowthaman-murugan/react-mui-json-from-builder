@@ -13,16 +13,12 @@ import { ChangeEvent, FC, useEffect, useState } from "react"
 import { JInput } from "../UInput/UInput"
 
 const URadioTextGroupLayout: FC<ControlProps> = (props) => {
-  console.log("..........URadioTextGroupLayout......................", props)
-
   const { schema, label, errors, handleChange, path } = props
   const properties = schema.properties
   const [value, setValue] = useState("")
   const [outData, setOutData] = useState({})
 
   useEffect(() => {
-    console.log("..outData", outData)
-
     handleChange(path, Object.keys(outData).length === 0 ? undefined : outData)
   }, [outData])
 
