@@ -4,9 +4,8 @@ import Dashboard from "../Modules/Dashboard/Dashboard"
 import Layout from "../Layout/Layout"
 import UIView from "../Modules/Dashboard/UIView"
 import Schema from "../Modules/Dashboard/Schema"
-import UiSchema from "../Modules/Dashboard/UiSchema"
-import Result from "../Modules/Dashboard/Result"
 import UComponents from "../Modules/UComponents"
+import FormView from "../Modules/Dashboard/FormView/FormView"
 
 export const AppRoutes: FC = () => {
   return (
@@ -15,8 +14,7 @@ export const AppRoutes: FC = () => {
         <Route element={<Dashboard />}>
           <Route path={"ui"} element={<UIView />} />
           <Route path={"schema"} element={<Schema />} />
-          <Route path={"uischema"} element={<UiSchema />} />
-          <Route path={"data"} element={<Result />} />
+          <Route path={"form"} element={<FormView />} />
           <Route path={"*"} element={<Navigate to={"ui"} replace />} />
         </Route>
         <Route path={"c"} element={<UComponents />} />
